@@ -1,0 +1,61 @@
+<c-row class="mb-4">
+  <c-col [lg]="3">
+    <c-card>
+      <c-card-body class="p-0 clearfix">
+        <div class="bg-primary p-4 px-5 font-2xl mr-3 float-left white">
+          <svg [cIcon]="icons.cilStorage" size="xl" title="List Icon"></svg>
+        </div>
+        <div class="h5 text-primary mb-0 pt-3">100</div>
+        <div class="text-muted text-uppercase font-weight-bold font-xs">ห้องทั้งหมด</div>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <!--/.col-->
+  <c-col [lg]="3">
+    <div class="card">
+      <div class="card-body p-0 clearfix">
+        <div class="bg-warning p-4 px-5 font-2xl mr-3 float-left white">
+          <svg [cIcon]="icons.cilLoopCircular" size="xl" title="List Icon"></svg>
+        </div>
+        <div class="h5 text-warning mb-0 pt-3">100</div>
+        <div class="text-muted text-uppercase font-weight-bold font-xs">รอถ่ายทอดสด</div>
+      </div>
+    </div>
+  </c-col>
+  <!--/.col-->
+  <c-col [lg]="3">
+    <div class="card">
+      <div class="card-body p-0 clearfix">
+        <div class="bg-info p-4 px-5 font-2xl mr-3 float-left white">
+          <svg [cIcon]="icons.cilVideo" size="xl" title="List Icon"></svg>
+        </div>
+        <div class="h5 text-info mb-0 pt-3">100</div>
+        <div class="text-muted text-uppercase font-weight-bold font-xs">กำลังถ่ายทอดสด</div>
+      </div>
+    </div>
+  </c-col>
+  <!--/.col-->
+  <c-col [lg]="3">
+    <div class="card">
+      <div class="card-body p-0 clearfix">
+        <div class="bg-success p-4 px-5 font-2xl mr-3 float-left white">
+          <svg [cIcon]="icons.cilCheckCircle" size="xl" title="List Icon"></svg>
+        </div>
+        <div class="h5 text-success mb-0 pt-3">100</div>
+        <div class="text-muted text-uppercase font-weight-bold font-xs">ถ่ายทอดสดเสร็จสิ้น</div>
+      </div>
+    </div>
+  </c-col>
+</c-row>
+
+<c-row>
+  <c-col xs>
+    <c-card class="mb-4">
+      <c-card-header><svg [cIcon]="icons.cilBarChart" title="List Icon"></svg>
+        แผนภูมิการใช้งานห้องถ่ายทอดสด</c-card-header>
+      <c-card-body>
+        <c-chart [data]="data" type="bar"></c-chart>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>
