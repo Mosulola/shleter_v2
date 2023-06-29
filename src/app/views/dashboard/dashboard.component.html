@@ -1,5 +1,5 @@
 <c-row class="mb-4">
-  <c-col [lg]="3">
+  <c-col lg="3">
     <c-card>
       <c-card-body class="p-0 clearfix">
         <div class="bg-primary p-4 px-5 font-2xl mr-3 float-left white">
@@ -11,7 +11,7 @@
     </c-card>
   </c-col>
   <!--/.col-->
-  <c-col [lg]="3">
+  <c-col lg="3">
     <div class="card">
       <div class="card-body p-0 clearfix">
         <div class="bg-warning p-4 px-5 font-2xl mr-3 float-left white">
@@ -23,7 +23,7 @@
     </div>
   </c-col>
   <!--/.col-->
-  <c-col [lg]="3">
+  <c-col lg="3">
     <div class="card">
       <div class="card-body p-0 clearfix">
         <div class="bg-info p-4 px-5 font-2xl mr-3 float-left white">
@@ -35,7 +35,7 @@
     </div>
   </c-col>
   <!--/.col-->
-  <c-col [lg]="3">
+  <c-col lg="3">
     <div class="card">
       <div class="card-body p-0 clearfix">
         <div class="bg-success p-4 px-5 font-2xl mr-3 float-left white">
@@ -48,14 +48,112 @@
   </c-col>
 </c-row>
 
-<c-row>
+<c-row class="mb-4">
   <c-col xs>
     <c-card class="mb-4">
       <c-card-header><svg [cIcon]="icons.cilBarChart" title="List Icon"></svg>
         แผนภูมิการใช้งานห้องถ่ายทอดสด</c-card-header>
       <c-card-body>
-        <c-chart [data]="data" type="bar"></c-chart>
+        <canvas baseChart class="chart" style="height: 40vh" [datasets]="barChartData" [labels]="barChartLabels"
+          [options]="barChartOptions" [legend]="barChartLegend" [type]="'bar'"></canvas>
       </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>
+
+<c-row>
+  <c-col xs="12">
+    <c-card>
+      <c-card-body>
+        <c-row>
+          <c-col md="6">
+            <c-row>
+              <c-col xs="12">
+                <svg [cIcon]="icons.cilChart" title="List Icon"></svg>&nbsp; <b>
+                  สถานะห้องถ่ายทอดสด
+                </b>
+              </c-col>
+            </c-row>
+            <hr>
+            <div *ngFor="let listStatus of listStatus.result">
+              <c-row class=" title-progress">
+                <c-col xs="6">
+                  {{listStatus.value}}
+                </c-col>
+                <c-col xs="6" class="text-right">
+                  <b>{{listStatus.total}}</b>&nbsp; <small class="percent">({{calculatePercent(listStatus.total,
+                    stat.status.total_rooms) | number:'1.2-2'}}%)</small>
+                </c-col>
+              </c-row>
+              <c-row>
+                <c-col xs="12">
+                  <c-progress class="progress">
+                    <c-progress-bar color="info"
+                      [value]="calculatePercent(listStatus.total,stat.status.total_rooms)"></c-progress-bar>
+                  </c-progress>
+                </c-col>
+
+              </c-row>
+            </div>
+
+
+          </c-col>
+          <c-col md="6">
+            <c-row>
+              <c-col xs="12">
+                <svg [cIcon]="icons.cilChart" title="List Icon"></svg>&nbsp;<b>
+                  ประเภทห้องถ่ายทอดสด
+                </b>
+              </c-col>
+            </c-row>
+            <hr>
+            <div *ngFor="let listType of listType.result">
+              <c-row class=" title-progress">
+                <c-col xs="6">
+                  {{listType.value}}
+                </c-col>
+                <c-col xs="6" class="text-right">
+                  <b>{{listType.total}}</b>&nbsp; <small class="percent">({{calculatePercent(listType.total,
+                    stat.type_room.total_type) | number:'1.2-2'}}%)</small>
+                </c-col>
+              </c-row>
+              <c-row>
+                <c-col xs="12">
+                  <c-progress class="progress">
+                    <c-progress-bar color="warning" [value]="calculatePercent(listType.total,
+                    stat.type_room.total_type)"></c-progress-bar>
+                  </c-progress>
+                </c-col>
+
+              </c-row>
+            </div>
+            <div>
+              <c-row class=" title-progress">
+                <c-col xs="6">
+                  ไม่ระบุประเภท
+                </c-col>
+                <c-col xs="6" class="text-right">
+                  <b>{{stat.type_room.type_none}}</b>&nbsp; <small
+                    class="percent">({{calculatePercent(stat.type_room.type_none, stat.type_room.total_type) |
+                    number:'1.2-2'}}%)</small>
+                </c-col>
+              </c-row>
+              <c-row>
+                <c-col xs="12">
+                  <c-progress class="progress">
+                    <c-progress-bar color="warning"
+                      [value]="calculatePercent(stat.type_room.type_none, stat.type_room.total_type)"></c-progress-bar>
+                  </c-progress>
+                </c-col>
+
+              </c-row>
+            </div>
+          </c-col>
+
+
+        </c-row>
+      </c-card-body>
+
     </c-card>
   </c-col>
 </c-row>

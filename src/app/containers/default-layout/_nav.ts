@@ -12,7 +12,7 @@ export const navItems: INavData[] = [
   },
   {
     name: 'ข้อมูลสถิติ',
-    url: '/dashboard',
+    url: '/view-log',
     iconComponent: { name: 'cil-list' },
   },
 ];

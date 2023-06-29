@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
-import { cilStorage, cilVideo, cilLoopCircular, cilCheckCircle, cilBarChart } from '@coreui/icons';
+import { cilStorage, cilVideo, cilLoopCircular, cilCheckCircle, cilBarChart, cilChart } from '@coreui/icons';
 import { RoomsService } from '../../services/rooms.service';
 import { Status } from '../../interface/status';
 import { TypeRoom } from '../../interface/type-room';
@@ -23,10 +23,10 @@ interface IUser {
   templateUrl: 'dashboard.component.html',
   styleUrls: ['dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnChanges {
   constructor(private roomService: RoomsService) {
   }
-  icons = { cilStorage, cilVideo, cilLoopCircular, cilCheckCircle, cilBarChart };
+  icons = { cilStorage, cilVideo, cilLoopCircular, cilCheckCircle, cilBarChart, cilChart };
 
   stat: any = {
     status: {
@@ -55,21 +55,21 @@ export class DashboardComponent implements OnInit {
     }
   };
 
-  data: any = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+  chartData: any = {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'casc'],
     datasets: [
       {
-        label: 'GitHub Commits',
+        label: 'ห้องแบ่งพิมพ์',
         backgroundColor: '#f87979',
         data: [40, 20, 12, 39, 10, 80, 40]
       },
       {
-        label: 'Hello',
+        label: 'ห้องพูดทวน',
         backgroundColor: '#abcdef',
         data: [40, 20, 12, 39, 10, 80, 40]
       },
       {
-        label: 'World',
+        label: 'อื่น ๆ',
         backgroundColor: '#fedcba',
         data: [40, 20, 12, 39, 10, 80, 40]
       }
@@ -113,11 +113,15 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  ngOnChanges(): void {
+    this.chartData.labels = this.barChartLabels;
+  }
+
   getStatusRooms() {
     this.roomService.getStatusRoom().subscribe((res: any) => {
       this.listStatus.result = res.result.map((e: any) => {
         e.value = e.value.split(' ')[0];
-        e.total = this.stat.status[`${e.value.toLowerCase()}`];
+        e.total = parseInt(this.stat.status[`${e.value.toLowerCase()}`]);
         return e
       });
     })
@@ -141,6 +145,7 @@ export class DashboardComponent implements OnInit {
     stat.forEach((value: any) => {
       this.barChartLabels.push(`${this.month[value.month - 1]} ${value.year}`);
     })
+    this.chartData.labels = this.barChartLabels
     this.barChartData.push({
       data: stat.map((e: any) => e.bangphim_type),
       label: 'ห้องแบ่งพิมพ์'
